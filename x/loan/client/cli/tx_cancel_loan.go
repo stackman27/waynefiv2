@@ -3,12 +3,13 @@ package cli
 import (
 	"strconv"
 
+	"loan/x/loan/types"
+
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/cosmos/cosmos-sdk/client/tx"
 	"github.com/spf13/cast"
 	"github.com/spf13/cobra"
-	"loan/x/loan/types"
 )
 
 var _ = strconv.Itoa(0)
