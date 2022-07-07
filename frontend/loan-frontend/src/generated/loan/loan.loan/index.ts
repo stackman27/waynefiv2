@@ -11,10 +11,6 @@ async function initTxClient(vuexGetters) {
 	return await txClient(vuexGetters.offlineSigner, {
 		addr: vuexGetters.rpcNode
 	})
-	
-	// return await txClient(vuexGetters['common/wallet/signer'], {
-	// 	addr: vuexGetters['common/env/apiTendermint']
-	// })
 }
 
 async function initQueryClient(vuexGetters) {

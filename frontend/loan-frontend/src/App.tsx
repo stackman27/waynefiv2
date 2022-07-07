@@ -3,7 +3,7 @@ import { getKeplrFromWindow } from "@keplr-wallet/stores"
 import { Keplr } from "@keplr-wallet/types"
 import { chainInfo } from './config/chain';
 import ConnectWallet from './components/ConnetWallet'
-import GetLoans from './components/GetLoans'
+import  Loans from './components/Loans'
 
 const KeyAccountAutoConnect = "acount_auto_connect"
 
@@ -11,6 +11,17 @@ const KeyAccountAutoConnect = "acount_auto_connect"
 function App() {
   const [keplr, setKeplr] = useState<Keplr | null> (null)
   const [bech32Address, setBech32Address] = useState<string>("")
+
+  var rootGetters =  {
+    apiNode: 'http://localhost:1317',
+    rpcNode: 'http://localhost:26657',
+    wsNode: 'ws://localhost:26657/websocket',
+    chainId: 'loan-1',
+    addrPrefix: 'loan',
+    sdkVersion: 'Stargate',
+    getTXApi: 'http://localhost:26657/tx?hash=0x',       
+    offlineSigner: keplr && keplr.getOfflineSigner(chainInfo.chainId),
+}
 
   const connectWallet = async() => {
     try {
@@ -39,7 +50,7 @@ function App() {
   return (
     <div style = {{textAlign: 'center'}}>  
       <ConnectWallet userAddr = {bech32Address} connectWallet = {connectWallet} signOut = {signOut}/>
-      <GetLoans userAddr = {bech32Address} keplr = {keplr || null}/>
+      <Loans userAddr = {bech32Address} keplr = {keplr || null} rootGetters = {rootGetters}/>
     </div>
     )
 }
