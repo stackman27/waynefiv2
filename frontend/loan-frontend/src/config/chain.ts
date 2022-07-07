@@ -1,11 +1,10 @@
 
 import { ChainInfo } from "@keplr-wallet/types";
-import { Bech32Address } from "@keplr-wallet/cosmos";
 
 export const chainInfo: ChainInfo = {
   rpc: "http://localhost:26657",
   rest: "http://localhost:1317",
-  chainId: "loan-localnet-1",
+  chainId: "loan-1",
   chainName: "loan",
   stakeCurrency: {
     coinDenom: "loan",
@@ -15,11 +14,18 @@ export const chainInfo: ChainInfo = {
   bip44: {
     coinType: 118,
   },
-  bech32Config: Bech32Address.defaultBech32Config("loan"),
+  bech32Config: {
+    bech32PrefixAccAddr: "loan",
+    bech32PrefixAccPub: "loan" + "pub",
+    bech32PrefixValAddr: "loan" + "valoper",
+    bech32PrefixValPub: "loan" + "valoperpub",
+    bech32PrefixConsAddr: "loan" + "valcons",
+    bech32PrefixConsPub: "loan" + "valconspub",
+  },
   currencies: [
     {
-      coinDenom: "ARB",
-      coinMinimalDenom: "uarb",
+      coinDenom: "LOAN",
+      coinMinimalDenom: "uloan",
       coinDecimals: 6,
     },
     {
@@ -30,10 +36,15 @@ export const chainInfo: ChainInfo = {
   ],
   feeCurrencies: [
     {
-      coinDenom: "ARB",
-      coinMinimalDenom: "uarb",
+      coinDenom: "LOAN",
+      coinMinimalDenom: "uloan",
       coinDecimals: 6,
     },
   ],
-  features: ["stargate", "ibc-transfer"],
+  gasPriceStep: {
+    low: 0.01,
+    average: 0.025,
+    high: 0.03,
+  },
+  features: [],
 };
