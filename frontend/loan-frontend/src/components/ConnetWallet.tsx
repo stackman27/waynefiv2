@@ -5,10 +5,14 @@ import { chainInfo } from '../config/chain';
 
 function ConnectWallet(props: { connectWallet: () => void; signOut: () => void; userAddr: string; }) {
   return (
-    <div className="App">
-      <button onClick={() => props.connectWallet()}> Connect Wallet </button>
-      <button onClick={() => props.signOut()}> SignOut </button>
-      <h1> Address: {props.userAddr || "Address Not found"} </h1>
+    <div style = {{width: '80%', marginLeft: 'auto', marginRight: 'auto', justifyContent: 'center', height: '60px', borderBottom: '1px solid #ccc'}}>
+      <div style = {{float: 'left',  height: '100%', width: '15%', display: 'flex', alignItems: 'center'}}> 
+        <button onClick={() => props.connectWallet()}> Connect Wallet </button> &nbsp; &nbsp;
+        <button onClick={() => props.signOut()}> SignOut </button>
+      </div>
+      <div style = {{float: 'right'}}> 
+      <h3> Address: {props.userAddr || "Address Not found"} </h3>
+      </div>
     </div>
   );
 }

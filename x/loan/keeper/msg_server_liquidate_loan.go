@@ -27,7 +27,7 @@ func (k msgServer) LiquidateLoan(goCtx context.Context, msg *types.MsgLiquidateL
 
 	// the status of the loan must be approved
 	if loan.State != "approved" {
-		return nil, errors.New("The loan myst be approved to be liquidated")
+		return nil, errors.New("The loan must be approved to be liquidated")
 	}
 
 	deadline, err := strconv.ParseInt(loan.Deadline, 10, 64)

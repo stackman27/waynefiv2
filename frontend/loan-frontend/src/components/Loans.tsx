@@ -18,6 +18,11 @@ interface rootGetters {
 
 function Loans(props: {userAddr: string, keplr: Keplr | null, rootGetters: rootGetters | null}) {
 
+    const [state, setState] = React.useState({
+        amount: 0,
+        collateral: 0,
+      })
+
     const [{ data: userData}] = useAxios(
         `http://0.0.0.0:1317/cosmos/auth/v1beta1/accounts/${props.userAddr}`
     )
@@ -43,20 +48,22 @@ function Loans(props: {userAddr: string, keplr: Keplr | null, rootGetters: rootG
 
         var data = {
             creator: props.userAddr,
-            amount: 1000 + "uloan",
-            fee: 100 + "uloan",
-            collateral: 1500 + "uloan", 
-            deadline: 1000,
+            amount: state.amount + "uloan",
+            fee: 200 + "uloan",
+            collateral: state.collateral + "uloan", 
+            deadline: "1000",
         }
 
+
+  
         const newTx = await loanLoan.actions
-                            .sendMsgRequestLoan({rootGetters: props.rootGetters},
-                                                {value: data})
+        .sendMsgRequestLoan({rootGetters: props.rootGetters},
+                            {value: data})
 
         console.log(newTx)
     }
 
-    const approveLoan = async () => {
+    const approveLoan = async (loanId) => {
         if (!props.keplr) {
             throw Error("Keplr isn't connected");
         }
@@ -64,7 +71,7 @@ function Loans(props: {userAddr: string, keplr: Keplr | null, rootGetters: rootG
         // start creating msg for approving loan
         var data = {
             creator: props.userAddr,
-            id: 0,
+            id: loanId,
         }
  
         const newTx = await loanLoan.actions
@@ -73,30 +80,115 @@ function Loans(props: {userAddr: string, keplr: Keplr | null, rootGetters: rootG
 
         console.log(newTx)
     }
-    
-    const cancelLoan = () => {
-        console.log("CANCEL THIS LOAN")
+
+    const repayLoan = async (loanId) => {
+        if (!props.keplr) {
+            throw Error("Keplr isn't connected");
+        }
+        
+        var data = {
+            creator: props.userAddr,
+            id: loanId
+        }
+
+        const newTx = await loanLoan.actions
+        .sendMsgRepayLoan({rootGetters: props.rootGetters},
+                            {value: data})
+
+console.log(newTx)
     }
 
-    return (
-    <div style = {{textAlign: 'left', width: '80%', marginLeft: 'auto', marginRight: 'auto'}}>
-        <h2> User Balance: {userBankData && userBankData.balance.amount.concat(userBankData.balance.denom) } </h2>
-        <div>
-            <button onClick={() => requestLoan()}>RequestLoan</button>
-        </div>
+    const liquidateLoan = async (loanId) => {
+        if (!props.keplr) {
+            throw Error("Keplr isn't connected");
+        }
+        
+        var data = {
+            creator: props.userAddr,
+            id: loanId
+        }
 
-        <h3 style = {{color: 'red'}}> Loans </h3>
+        const newTx = await loanLoan.actions
+        .sendMsgLiquidateLoan({rootGetters: props.rootGetters},
+        {value: data})
+
+        console.log(newTx)
+    }
+    
+    const cancelLoan = async(loanId) => {
+        if (!props.keplr) {
+            throw Error("Keplr isn't connected");
+        }
+        
+        var data = {
+            creator: props.userAddr,
+            id: loanId
+        }
+
+        const newTx = await loanLoan.actions
+        .sendMsgCancelLoan({rootGetters: props.rootGetters},
+                            {value: data})
+
+        console.log(newTx)
+    }
+
+    function handleChange(evt) {
+        const value = evt.target.value;
+        setState({
+          ...state,
+          [evt.target.name]: value
+        });
+      }
+
+    return (
+    <div style = {{textAlign: 'left', width: '80%', marginLeft: 'auto', marginRight: 'auto',marginTop: 0}}>
+        <div style={{float: 'right',}}> 
+            <h3> User Balance: {userBankData && userBankData.balance.amount.concat(userBankData.balance.denom) } </h3>
+        </div>
+        <br/> <br/>
+        <div>
+            <h3 style = {{color: 'red'}}> Request Loan </h3>
+       
+                <label style = {{float: 'left'}}> 
+                    Amount: <br/>
+                    <input type="text" name="amount" value={state.amount} onChange = {handleChange}/>
+                </label>
+
+                <label  style = {{float: 'left', marginLeft: 20}}>
+                    Fixed Fee: <br/>
+                    <input type="text" name="fixedFee" disabled= {true} placeholder = {"200uloan"}/>
+                </label>
+
+                <label  style = {{float: 'left', marginLeft: 20}}>
+                    Collateral:<br/>
+                    <input type="text" name="collateral" value={state.collateral} onChange={handleChange}/>
+                </label>
+
+                <label  style = {{float: 'left', marginLeft: 20}}> 
+                Deadline: <br/>
+                <input type="text" name="fixedFee" disabled= {true} placeholder = {"1000 block height"}/> 
+                </label>
+               
+                <button onClick={() => requestLoan()} style = {{marginTop: 20, marginLeft: 25}}> Request Loan </button> 
+                
+        
+        </div>
+        <br/>
+        <hr/>
+        <h2 style = {{color: 'red'}}> All Loans </h2>
         <div style = {{}}> 
             {loanData && loanData.Loan.map((loan: { amount: string, id: string , borrower: string, state: string, collateral: string, deadline:string}) => (
-                <div id={loan.id} style = {{height: '300px', width: '400px', background: '#eee', textAlign: 'left', padding: 10, float: 'left', margin: 20}}>
+                <div key={loan.id} style = {{height: '300px', width: '420px', background: '#eee', textAlign: 'left', padding: 10, float: 'left', margin: 20, }}>
                         <h2>Loan Id: {loan.id}</h2>
                         <p> Loan Amount: {loan.amount}</p>
                         <p> Loan Borrower: {loan.borrower} </p>
                         <p> Loan State: {loan.state} </p>
                         <p> Loan Collateral: {loan.collateral}</p>
                         <p> Loan Deadline: {loan.deadline} </p>
-                    <button onClick={() => approveLoan()}> Approve Loan </button>
-                    <button onClick={() => cancelLoan()} disabled = {props.userAddr === loan.borrower ? false : true}> Cancel Loan </button>
+                    <button onClick={() => approveLoan(loan.id)} disabled = {props.userAddr !== loan.borrower ? false : true}> Approve Loan </button> &nbsp;
+                    <button onClick={() => repayLoan(loan.id)} disabled = {loan.state === "approved" ? false : true}> Repay Loan </button> &nbsp;
+                    <button onClick={() => liquidateLoan(loan.id)} disabled = {loan.state === "approved" ? false : true}> Liquidate Loan </button> &nbsp;
+                    <button onClick={() => cancelLoan(loan.id)} disabled = {props.userAddr === loan.borrower ? false : true}> Cancel Loan </button>
                 </div>
             ))}
        </div> 
@@ -105,3 +197,4 @@ function Loans(props: {userAddr: string, keplr: Keplr | null, rootGetters: rootG
 }
 
 export default Loans 
+
