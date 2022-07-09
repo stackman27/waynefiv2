@@ -1,0 +1,12 @@
+syntax = "proto3";
+package loan.loan;
+
+option go_package = "loan/x/loan/types";
+
+message Apr {
+  uint64 id = 1;
+  int32 blockHeight = 2; 
+  int32 depositApy = 3; 
+  int32 borrowApy = 4; 
+  string creator = 5;
+}

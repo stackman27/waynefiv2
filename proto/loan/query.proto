@@ -11,6 +11,8 @@ import "loan/deposit_earned.proto";
 import "loan/borrow_accured.proto";
 import "loan/deposit.proto";
 import "loan/borrow.proto";
+import "loan/apr.proto";
+import "loan/user.proto";
 // this line is used by starport scaffolding # 1
 
 option go_package = "loan/x/loan/types";
@@ -79,6 +81,26 @@ service Query {
 	// Queries a list of Borrow items.
 	rpc BorrowAll(QueryAllBorrowRequest) returns (QueryAllBorrowResponse) {
 		option (google.api.http).get = "/loan/loan/borrow";
+	}
+
+// Queries a Apr by id.
+	rpc Apr(QueryGetAprRequest) returns (QueryGetAprResponse) {
+		option (google.api.http).get = "/loan/loan/apr/{id}";
+	}
+
+	// Queries a list of Apr items.
+	rpc AprAll(QueryAllAprRequest) returns (QueryAllAprResponse) {
+		option (google.api.http).get = "/loan/loan/apr";
+	}
+
+// Queries a User by id.
+	rpc User(QueryGetUserRequest) returns (QueryGetUserResponse) {
+		option (google.api.http).get = "/loan/loan/user/{id}";
+	}
+
+	// Queries a list of User items.
+	rpc UserAll(QueryAllUserRequest) returns (QueryAllUserResponse) {
+		option (google.api.http).get = "/loan/loan/user";
 	}
 
 // this line is used by starport scaffolding # 2
@@ -192,6 +214,40 @@ message QueryAllBorrowRequest {
 
 message QueryAllBorrowResponse {
 	repeated Borrow Borrow = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetAprRequest {
+	uint64 id = 1;
+}
+
+message QueryGetAprResponse {
+	Apr Apr = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllAprRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllAprResponse {
+	repeated Apr Apr = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetUserRequest {
+	uint64 id = 1;
+}
+
+message QueryGetUserResponse {
+	User User = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllUserRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllUserResponse {
+	repeated User User = 1 [(gogoproto.nullable) = false];
 	cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 

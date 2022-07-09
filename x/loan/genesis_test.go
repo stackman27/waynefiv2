@@ -68,6 +68,24 @@ func TestGenesis(t *testing.T) {
 			},
 		},
 		BorrowCount: 2,
+		AprList: []types.Apr{
+			{
+				Id: 0,
+			},
+			{
+				Id: 1,
+			},
+		},
+		AprCount: 2,
+		UserList: []types.User{
+			{
+				Id: 0,
+			},
+			{
+				Id: 1,
+			},
+		},
+		UserCount: 2,
 		// this line is used by starport scaffolding # genesis/test/state
 	}
 
@@ -91,5 +109,9 @@ func TestGenesis(t *testing.T) {
 	require.Equal(t, genesisState.DepositCount, got.DepositCount)
 	require.ElementsMatch(t, genesisState.BorrowList, got.BorrowList)
 	require.Equal(t, genesisState.BorrowCount, got.BorrowCount)
+	require.ElementsMatch(t, genesisState.AprList, got.AprList)
+	require.Equal(t, genesisState.AprCount, got.AprCount)
+	require.ElementsMatch(t, genesisState.UserList, got.UserList)
+	require.Equal(t, genesisState.UserCount, got.UserCount)
 	// this line is used by starport scaffolding # genesis/test/assert
 }

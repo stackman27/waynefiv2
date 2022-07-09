@@ -6,6 +6,8 @@ import "loan/deposit_earned.proto";
 import "loan/borrow_accured.proto";
 import "loan/deposit.proto";
 import "loan/borrow.proto";
+import "loan/apr.proto";
+import "loan/user.proto";
 // this line is used by starport scaffolding # proto/tx/import
 
 option go_package = "loan/x/loan/types";
@@ -32,6 +34,12 @@ rpc CreateDeposit(MsgCreateDeposit) returns (MsgCreateDepositResponse);
 rpc CreateBorrow(MsgCreateBorrow) returns (MsgCreateBorrowResponse);
   rpc UpdateBorrow(MsgUpdateBorrow) returns (MsgUpdateBorrowResponse);
   rpc DeleteBorrow(MsgDeleteBorrow) returns (MsgDeleteBorrowResponse);
+rpc CreateApr(MsgCreateApr) returns (MsgCreateAprResponse);
+  rpc UpdateApr(MsgUpdateApr) returns (MsgUpdateAprResponse);
+  rpc DeleteApr(MsgDeleteApr) returns (MsgDeleteAprResponse);
+rpc CreateUser(MsgCreateUser) returns (MsgCreateUserResponse);
+  rpc UpdateUser(MsgUpdateUser) returns (MsgUpdateUserResponse);
+  rpc DeleteUser(MsgDeleteUser) returns (MsgDeleteUserResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -229,5 +237,69 @@ message MsgDeleteBorrow {
 }
 
 message MsgDeleteBorrowResponse {}
+
+message MsgCreateApr {
+  string creator = 1;
+  int32 blockHeight = 2;
+  int32 depositApy = 3;
+  int32 borrowApy = 4;
+}
+
+message MsgCreateAprResponse {
+  uint64 id = 1;
+}
+
+message MsgUpdateApr {
+  string creator = 1;
+  uint64 id = 2;
+  int32 blockHeight = 3;
+  int32 depositApy = 4;
+  int32 borrowApy = 5;
+}
+
+message MsgUpdateAprResponse {}
+
+message MsgDeleteApr {
+  string creator = 1;
+  uint64 id = 2;
+}
+
+message MsgDeleteAprResponse {}
+
+message MsgCreateUser {
+  string creator = 1;
+  repeated bool collateral = 2;
+  repeated Deposit deposit = 3;
+  repeated Borrow borrow = 4;
+  repeated int32 assetBalances = 5;
+  repeated DepositEarned depositEarneds = 7;
+  repeated BorrowAccured borrowAccureds = 8;
+  repeated TxHistory txHistories = 9;
+}
+
+message MsgCreateUserResponse {
+  uint64 id = 1;
+}
+
+message MsgUpdateUser {
+  string creator = 1;
+  uint64 id = 2;
+  repeated bool collateral = 3;
+  repeated Deposit deposit = 4;
+  repeated Borrow borrow = 5;
+  repeated int32 assetBalances = 6;
+  repeated DepositEarned depositEarneds = 7;
+  repeated BorrowAccured borrowAccureds = 8;
+  repeated TxHistory txHistories = 9;
+}
+
+message MsgUpdateUserResponse {}
+
+message MsgDeleteUser {
+  string creator = 1;
+  uint64 id = 2;
+}
+
+message MsgDeleteUserResponse {}
 
 // this line is used by starport scaffolding # proto/tx/message

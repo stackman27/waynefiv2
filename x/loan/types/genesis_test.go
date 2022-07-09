@@ -76,6 +76,24 @@ func TestGenesisState_Validate(t *testing.T) {
 					},
 				},
 				BorrowCount: 2,
+				AprList: []types.Apr{
+					{
+						Id: 0,
+					},
+					{
+						Id: 1,
+					},
+				},
+				AprCount: 2,
+				UserList: []types.User{
+					{
+						Id: 0,
+					},
+					{
+						Id: 1,
+					},
+				},
+				UserCount: 2,
 				// this line is used by starport scaffolding # types/genesis/validField
 			},
 			valid: true,
@@ -233,6 +251,58 @@ func TestGenesisState_Validate(t *testing.T) {
 					},
 				},
 				BorrowCount: 0,
+			},
+			valid: false,
+		},
+		{
+			desc: "duplicated apr",
+			genState: &types.GenesisState{
+				AprList: []types.Apr{
+					{
+						Id: 0,
+					},
+					{
+						Id: 0,
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "invalid apr count",
+			genState: &types.GenesisState{
+				AprList: []types.Apr{
+					{
+						Id: 1,
+					},
+				},
+				AprCount: 0,
+			},
+			valid: false,
+		},
+		{
+			desc: "duplicated user",
+			genState: &types.GenesisState{
+				UserList: []types.User{
+					{
+						Id: 0,
+					},
+					{
+						Id: 0,
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "invalid user count",
+			genState: &types.GenesisState{
+				UserList: []types.User{
+					{
+						Id: 1,
+					},
+				},
+				UserCount: 0,
 			},
 			valid: false,
 		},

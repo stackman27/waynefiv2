@@ -16,6 +16,8 @@ func DefaultGenesis() *GenesisState {
 		BorrowAccuredList: []BorrowAccured{},
 		DepositList:       []Deposit{},
 		BorrowList:        []Borrow{},
+		AprList:           []Apr{},
+		UserList:          []User{},
 		// this line is used by starport scaffolding # genesis/types/default
 		Params: DefaultParams(),
 	}
@@ -95,6 +97,30 @@ func (gs GenesisState) Validate() error {
 			return fmt.Errorf("borrow id should be lower or equal than the last id")
 		}
 		borrowIdMap[elem.Id] = true
+	}
+	// Check for duplicated ID in apr
+	aprIdMap := make(map[uint64]bool)
+	aprCount := gs.GetAprCount()
+	for _, elem := range gs.AprList {
+		if _, ok := aprIdMap[elem.Id]; ok {
+			return fmt.Errorf("duplicated id for apr")
+		}
+		if elem.Id >= aprCount {
+			return fmt.Errorf("apr id should be lower or equal than the last id")
+		}
+		aprIdMap[elem.Id] = true
+	}
+	// Check for duplicated ID in user
+	userIdMap := make(map[uint64]bool)
+	userCount := gs.GetUserCount()
+	for _, elem := range gs.UserList {
+		if _, ok := userIdMap[elem.Id]; ok {
+			return fmt.Errorf("duplicated id for user")
+		}
+		if elem.Id >= userCount {
+			return fmt.Errorf("user id should be lower or equal than the last id")
+		}
+		userIdMap[elem.Id] = true
 	}
 	// this line is used by starport scaffolding # genesis/types/validate
 

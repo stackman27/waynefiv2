@@ -104,6 +104,30 @@ const (
 	// TODO: Determine the simulation weight value
 	defaultWeightMsgDeleteBorrow int = 100
 
+	opWeightMsgCreateApr = "op_weight_msg_apr"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgCreateApr int = 100
+
+	opWeightMsgUpdateApr = "op_weight_msg_apr"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgUpdateApr int = 100
+
+	opWeightMsgDeleteApr = "op_weight_msg_apr"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgDeleteApr int = 100
+
+	opWeightMsgCreateUser = "op_weight_msg_user"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgCreateUser int = 100
+
+	opWeightMsgUpdateUser = "op_weight_msg_user"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgUpdateUser int = 100
+
+	opWeightMsgDeleteUser = "op_weight_msg_user"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgDeleteUser int = 100
+
 	// this line is used by starport scaffolding # simapp/module/const
 )
 
@@ -170,6 +194,28 @@ func (AppModule) GenerateGenesisState(simState *module.SimulationState) {
 			},
 		},
 		BorrowCount: 2,
+		AprList: []types.Apr{
+			{
+				Id:      0,
+				Creator: sample.AccAddress(),
+			},
+			{
+				Id:      1,
+				Creator: sample.AccAddress(),
+			},
+		},
+		AprCount: 2,
+		UserList: []types.User{
+			{
+				Id:      0,
+				Creator: sample.AccAddress(),
+			},
+			{
+				Id:      1,
+				Creator: sample.AccAddress(),
+			},
+		},
+		UserCount: 2,
 		// this line is used by starport scaffolding # simapp/module/genesisState
 	}
 	simState.GenState[types.ModuleName] = simState.Cdc.MustMarshalJSON(&loanGenesis)
@@ -411,6 +457,72 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 	operations = append(operations, simulation.NewWeightedOperation(
 		weightMsgDeleteBorrow,
 		loansimulation.SimulateMsgDeleteBorrow(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgCreateApr int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgCreateApr, &weightMsgCreateApr, nil,
+		func(_ *rand.Rand) {
+			weightMsgCreateApr = defaultWeightMsgCreateApr
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgCreateApr,
+		loansimulation.SimulateMsgCreateApr(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgUpdateApr int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgUpdateApr, &weightMsgUpdateApr, nil,
+		func(_ *rand.Rand) {
+			weightMsgUpdateApr = defaultWeightMsgUpdateApr
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgUpdateApr,
+		loansimulation.SimulateMsgUpdateApr(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgDeleteApr int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgDeleteApr, &weightMsgDeleteApr, nil,
+		func(_ *rand.Rand) {
+			weightMsgDeleteApr = defaultWeightMsgDeleteApr
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgDeleteApr,
+		loansimulation.SimulateMsgDeleteApr(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgCreateUser int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgCreateUser, &weightMsgCreateUser, nil,
+		func(_ *rand.Rand) {
+			weightMsgCreateUser = defaultWeightMsgCreateUser
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgCreateUser,
+		loansimulation.SimulateMsgCreateUser(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgUpdateUser int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgUpdateUser, &weightMsgUpdateUser, nil,
+		func(_ *rand.Rand) {
+			weightMsgUpdateUser = defaultWeightMsgUpdateUser
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgUpdateUser,
+		loansimulation.SimulateMsgUpdateUser(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgDeleteUser int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgDeleteUser, &weightMsgDeleteUser, nil,
+		func(_ *rand.Rand) {
+			weightMsgDeleteUser = defaultWeightMsgDeleteUser
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgDeleteUser,
+		loansimulation.SimulateMsgDeleteUser(am.accountKeeper, am.bankKeeper, am.keeper),
 	))
 
 	// this line is used by starport scaffolding # simapp/module/operation

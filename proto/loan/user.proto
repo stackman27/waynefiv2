@@ -1,0 +1,24 @@
+syntax = "proto3";
+package loan.loan;
+
+option go_package = "loan/x/loan/types";
+
+import "gogoproto/gogo.proto";
+import "loan/deposit.proto";
+import "loan/borrow.proto";
+import "loan/deposit_earned.proto";
+import "loan/borrow_accured.proto";
+import "loan/tx_history.proto";
+
+
+message User {
+  string creator = 1;
+  uint64 id = 2;
+  repeated bool collateral = 3; 
+  repeated Deposit deposit = 4; 
+  repeated Borrow borrow = 5;
+  repeated int32 assetBalances = 6;
+  repeated DepositEarned depositEarneds = 7;
+  repeated BorrowAccured borrowAccured = 8;
+  repeated TxHistory txHistories = 9;
+}

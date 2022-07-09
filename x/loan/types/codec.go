@@ -28,6 +28,12 @@ func RegisterCodec(cdc *codec.LegacyAmino) {
 	cdc.RegisterConcrete(&MsgCreateBorrow{}, "loan/CreateBorrow", nil)
 	cdc.RegisterConcrete(&MsgUpdateBorrow{}, "loan/UpdateBorrow", nil)
 	cdc.RegisterConcrete(&MsgDeleteBorrow{}, "loan/DeleteBorrow", nil)
+	cdc.RegisterConcrete(&MsgCreateApr{}, "loan/CreateApr", nil)
+	cdc.RegisterConcrete(&MsgUpdateApr{}, "loan/UpdateApr", nil)
+	cdc.RegisterConcrete(&MsgDeleteApr{}, "loan/DeleteApr", nil)
+	cdc.RegisterConcrete(&MsgCreateUser{}, "loan/CreateUser", nil)
+	cdc.RegisterConcrete(&MsgUpdateUser{}, "loan/UpdateUser", nil)
+	cdc.RegisterConcrete(&MsgDeleteUser{}, "loan/DeleteUser", nil)
 	// this line is used by starport scaffolding # 2
 }
 
@@ -71,6 +77,16 @@ func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
 		&MsgCreateBorrow{},
 		&MsgUpdateBorrow{},
 		&MsgDeleteBorrow{},
+	)
+	registry.RegisterImplementations((*sdk.Msg)(nil),
+		&MsgCreateApr{},
+		&MsgUpdateApr{},
+		&MsgDeleteApr{},
+	)
+	registry.RegisterImplementations((*sdk.Msg)(nil),
+		&MsgCreateUser{},
+		&MsgUpdateUser{},
+		&MsgDeleteUser{},
 	)
 	// this line is used by starport scaffolding # 3
 

@@ -50,3 +50,13 @@ const (
 	BorrowKey      = "Borrow-value-"
 	BorrowCountKey = "Borrow-count-"
 )
+
+const (
+	AprKey      = "Apr-value-"
+	AprCountKey = "Apr-count-"
+)
+
+const (
+	UserKey      = "User-value-"
+	UserCountKey = "User-count-"
+)
