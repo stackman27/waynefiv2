@@ -25,3 +25,28 @@ const (
 	LoanKey      = "Loan-value-"
 	LoanCountKey = "Loan-count-"
 )
+
+const (
+	TxHistoryKey      = "TxHistory-value-"
+	TxHistoryCountKey = "TxHistory-count-"
+)
+
+const (
+	DepositEarnedKey      = "DepositEarned-value-"
+	DepositEarnedCountKey = "DepositEarned-count-"
+)
+
+const (
+	BorrowAccuredKey      = "BorrowAccured-value-"
+	BorrowAccuredCountKey = "BorrowAccured-count-"
+)
+
+const (
+	DepositKey      = "Deposit-value-"
+	DepositCountKey = "Deposit-count-"
+)
+
+const (
+	BorrowKey      = "Borrow-value-"
+	BorrowCountKey = "Borrow-count-"
+)

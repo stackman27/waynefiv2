@@ -1,0 +1,14 @@
+syntax = "proto3";
+package loan.loan;
+
+option go_package = "loan/x/loan/types";
+
+message TxHistory {
+  uint64 id = 1;
+  int32 blockHeight = 2; 
+  string tx = 3; 
+  string asset = 4; 
+  int32 amount = 5; 
+  string denom = 6; 
+  string creator = 7;
+}

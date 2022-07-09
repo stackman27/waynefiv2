@@ -44,6 +44,66 @@ const (
 	// TODO: Determine the simulation weight value
 	defaultWeightMsgCancelLoan int = 100
 
+	opWeightMsgCreateTxHistory = "op_weight_msg_tx_history"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgCreateTxHistory int = 100
+
+	opWeightMsgUpdateTxHistory = "op_weight_msg_tx_history"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgUpdateTxHistory int = 100
+
+	opWeightMsgDeleteTxHistory = "op_weight_msg_tx_history"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgDeleteTxHistory int = 100
+
+	opWeightMsgCreateDepositEarned = "op_weight_msg_deposit_earned"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgCreateDepositEarned int = 100
+
+	opWeightMsgUpdateDepositEarned = "op_weight_msg_deposit_earned"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgUpdateDepositEarned int = 100
+
+	opWeightMsgDeleteDepositEarned = "op_weight_msg_deposit_earned"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgDeleteDepositEarned int = 100
+
+	opWeightMsgCreateBorrowAccured = "op_weight_msg_borrow_accured"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgCreateBorrowAccured int = 100
+
+	opWeightMsgUpdateBorrowAccured = "op_weight_msg_borrow_accured"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgUpdateBorrowAccured int = 100
+
+	opWeightMsgDeleteBorrowAccured = "op_weight_msg_borrow_accured"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgDeleteBorrowAccured int = 100
+
+	opWeightMsgCreateDeposit = "op_weight_msg_deposit"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgCreateDeposit int = 100
+
+	opWeightMsgUpdateDeposit = "op_weight_msg_deposit"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgUpdateDeposit int = 100
+
+	opWeightMsgDeleteDeposit = "op_weight_msg_deposit"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgDeleteDeposit int = 100
+
+	opWeightMsgCreateBorrow = "op_weight_msg_borrow"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgCreateBorrow int = 100
+
+	opWeightMsgUpdateBorrow = "op_weight_msg_borrow"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgUpdateBorrow int = 100
+
+	opWeightMsgDeleteBorrow = "op_weight_msg_borrow"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgDeleteBorrow int = 100
+
 	// this line is used by starport scaffolding # simapp/module/const
 )
 
@@ -55,6 +115,61 @@ func (AppModule) GenerateGenesisState(simState *module.SimulationState) {
 	}
 	loanGenesis := types.GenesisState{
 		Params: types.DefaultParams(),
+		TxHistoryList: []types.TxHistory{
+			{
+				Id:      0,
+				Creator: sample.AccAddress(),
+			},
+			{
+				Id:      1,
+				Creator: sample.AccAddress(),
+			},
+		},
+		TxHistoryCount: 2,
+		DepositEarnedList: []types.DepositEarned{
+			{
+				Id:      0,
+				Creator: sample.AccAddress(),
+			},
+			{
+				Id:      1,
+				Creator: sample.AccAddress(),
+			},
+		},
+		DepositEarnedCount: 2,
+		BorrowAccuredList: []types.BorrowAccured{
+			{
+				Id:      0,
+				Creator: sample.AccAddress(),
+			},
+			{
+				Id:      1,
+				Creator: sample.AccAddress(),
+			},
+		},
+		BorrowAccuredCount: 2,
+		DepositList: []types.Deposit{
+			{
+				Id:      0,
+				Creator: sample.AccAddress(),
+			},
+			{
+				Id:      1,
+				Creator: sample.AccAddress(),
+			},
+		},
+		DepositCount: 2,
+		BorrowList: []types.Borrow{
+			{
+				Id:      0,
+				Creator: sample.AccAddress(),
+			},
+			{
+				Id:      1,
+				Creator: sample.AccAddress(),
+			},
+		},
+		BorrowCount: 2,
 		// this line is used by starport scaffolding # simapp/module/genesisState
 	}
 	simState.GenState[types.ModuleName] = simState.Cdc.MustMarshalJSON(&loanGenesis)
@@ -131,6 +246,171 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 	operations = append(operations, simulation.NewWeightedOperation(
 		weightMsgCancelLoan,
 		loansimulation.SimulateMsgCancelLoan(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgCreateTxHistory int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgCreateTxHistory, &weightMsgCreateTxHistory, nil,
+		func(_ *rand.Rand) {
+			weightMsgCreateTxHistory = defaultWeightMsgCreateTxHistory
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgCreateTxHistory,
+		loansimulation.SimulateMsgCreateTxHistory(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgUpdateTxHistory int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgUpdateTxHistory, &weightMsgUpdateTxHistory, nil,
+		func(_ *rand.Rand) {
+			weightMsgUpdateTxHistory = defaultWeightMsgUpdateTxHistory
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgUpdateTxHistory,
+		loansimulation.SimulateMsgUpdateTxHistory(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgDeleteTxHistory int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgDeleteTxHistory, &weightMsgDeleteTxHistory, nil,
+		func(_ *rand.Rand) {
+			weightMsgDeleteTxHistory = defaultWeightMsgDeleteTxHistory
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgDeleteTxHistory,
+		loansimulation.SimulateMsgDeleteTxHistory(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgCreateDepositEarned int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgCreateDepositEarned, &weightMsgCreateDepositEarned, nil,
+		func(_ *rand.Rand) {
+			weightMsgCreateDepositEarned = defaultWeightMsgCreateDepositEarned
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgCreateDepositEarned,
+		loansimulation.SimulateMsgCreateDepositEarned(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgUpdateDepositEarned int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgUpdateDepositEarned, &weightMsgUpdateDepositEarned, nil,
+		func(_ *rand.Rand) {
+			weightMsgUpdateDepositEarned = defaultWeightMsgUpdateDepositEarned
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgUpdateDepositEarned,
+		loansimulation.SimulateMsgUpdateDepositEarned(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgDeleteDepositEarned int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgDeleteDepositEarned, &weightMsgDeleteDepositEarned, nil,
+		func(_ *rand.Rand) {
+			weightMsgDeleteDepositEarned = defaultWeightMsgDeleteDepositEarned
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgDeleteDepositEarned,
+		loansimulation.SimulateMsgDeleteDepositEarned(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgCreateBorrowAccured int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgCreateBorrowAccured, &weightMsgCreateBorrowAccured, nil,
+		func(_ *rand.Rand) {
+			weightMsgCreateBorrowAccured = defaultWeightMsgCreateBorrowAccured
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgCreateBorrowAccured,
+		loansimulation.SimulateMsgCreateBorrowAccured(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgUpdateBorrowAccured int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgUpdateBorrowAccured, &weightMsgUpdateBorrowAccured, nil,
+		func(_ *rand.Rand) {
+			weightMsgUpdateBorrowAccured = defaultWeightMsgUpdateBorrowAccured
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgUpdateBorrowAccured,
+		loansimulation.SimulateMsgUpdateBorrowAccured(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgDeleteBorrowAccured int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgDeleteBorrowAccured, &weightMsgDeleteBorrowAccured, nil,
+		func(_ *rand.Rand) {
+			weightMsgDeleteBorrowAccured = defaultWeightMsgDeleteBorrowAccured
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgDeleteBorrowAccured,
+		loansimulation.SimulateMsgDeleteBorrowAccured(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgCreateDeposit int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgCreateDeposit, &weightMsgCreateDeposit, nil,
+		func(_ *rand.Rand) {
+			weightMsgCreateDeposit = defaultWeightMsgCreateDeposit
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgCreateDeposit,
+		loansimulation.SimulateMsgCreateDeposit(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgUpdateDeposit int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgUpdateDeposit, &weightMsgUpdateDeposit, nil,
+		func(_ *rand.Rand) {
+			weightMsgUpdateDeposit = defaultWeightMsgUpdateDeposit
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgUpdateDeposit,
+		loansimulation.SimulateMsgUpdateDeposit(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgDeleteDeposit int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgDeleteDeposit, &weightMsgDeleteDeposit, nil,
+		func(_ *rand.Rand) {
+			weightMsgDeleteDeposit = defaultWeightMsgDeleteDeposit
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgDeleteDeposit,
+		loansimulation.SimulateMsgDeleteDeposit(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgCreateBorrow int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgCreateBorrow, &weightMsgCreateBorrow, nil,
+		func(_ *rand.Rand) {
+			weightMsgCreateBorrow = defaultWeightMsgCreateBorrow
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgCreateBorrow,
+		loansimulation.SimulateMsgCreateBorrow(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgUpdateBorrow int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgUpdateBorrow, &weightMsgUpdateBorrow, nil,
+		func(_ *rand.Rand) {
+			weightMsgUpdateBorrow = defaultWeightMsgUpdateBorrow
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgUpdateBorrow,
+		loansimulation.SimulateMsgUpdateBorrow(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgDeleteBorrow int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgDeleteBorrow, &weightMsgDeleteBorrow, nil,
+		func(_ *rand.Rand) {
+			weightMsgDeleteBorrow = defaultWeightMsgDeleteBorrow
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgDeleteBorrow,
+		loansimulation.SimulateMsgDeleteBorrow(am.accountKeeper, am.bankKeeper, am.keeper),
 	))
 
 	// this line is used by starport scaffolding # simapp/module/operation

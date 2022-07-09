@@ -6,6 +6,11 @@ import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
 import "loan/params.proto";
 import "loan/loan.proto";
+import "loan/tx_history.proto";
+import "loan/deposit_earned.proto";
+import "loan/borrow_accured.proto";
+import "loan/deposit.proto";
+import "loan/borrow.proto";
 // this line is used by starport scaffolding # 1
 
 option go_package = "loan/x/loan/types";
@@ -24,6 +29,56 @@ service Query {
 	// Queries a list of Loan items.
 	rpc LoanAll(QueryAllLoanRequest) returns (QueryAllLoanResponse) {
 		option (google.api.http).get = "/loan/loan/loan";
+	}
+
+// Queries a TxHistory by id.
+	rpc TxHistory(QueryGetTxHistoryRequest) returns (QueryGetTxHistoryResponse) {
+		option (google.api.http).get = "/loan/loan/tx_history/{id}";
+	}
+
+	// Queries a list of TxHistory items.
+	rpc TxHistoryAll(QueryAllTxHistoryRequest) returns (QueryAllTxHistoryResponse) {
+		option (google.api.http).get = "/loan/loan/tx_history";
+	}
+
+// Queries a DepositEarned by id.
+	rpc DepositEarned(QueryGetDepositEarnedRequest) returns (QueryGetDepositEarnedResponse) {
+		option (google.api.http).get = "/loan/loan/deposit_earned/{id}";
+	}
+
+	// Queries a list of DepositEarned items.
+	rpc DepositEarnedAll(QueryAllDepositEarnedRequest) returns (QueryAllDepositEarnedResponse) {
+		option (google.api.http).get = "/loan/loan/deposit_earned";
+	}
+
+// Queries a BorrowAccured by id.
+	rpc BorrowAccured(QueryGetBorrowAccuredRequest) returns (QueryGetBorrowAccuredResponse) {
+		option (google.api.http).get = "/loan/loan/borrow_accured/{id}";
+	}
+
+	// Queries a list of BorrowAccured items.
+	rpc BorrowAccuredAll(QueryAllBorrowAccuredRequest) returns (QueryAllBorrowAccuredResponse) {
+		option (google.api.http).get = "/loan/loan/borrow_accured";
+	}
+
+// Queries a Deposit by id.
+	rpc Deposit(QueryGetDepositRequest) returns (QueryGetDepositResponse) {
+		option (google.api.http).get = "/loan/loan/deposit/{id}";
+	}
+
+	// Queries a list of Deposit items.
+	rpc DepositAll(QueryAllDepositRequest) returns (QueryAllDepositResponse) {
+		option (google.api.http).get = "/loan/loan/deposit";
+	}
+
+// Queries a Borrow by id.
+	rpc Borrow(QueryGetBorrowRequest) returns (QueryGetBorrowResponse) {
+		option (google.api.http).get = "/loan/loan/borrow/{id}";
+	}
+
+	// Queries a list of Borrow items.
+	rpc BorrowAll(QueryAllBorrowRequest) returns (QueryAllBorrowResponse) {
+		option (google.api.http).get = "/loan/loan/borrow";
 	}
 
 // this line is used by starport scaffolding # 2
@@ -52,6 +107,91 @@ message QueryAllLoanRequest {
 
 message QueryAllLoanResponse {
 	repeated Loan Loan = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetTxHistoryRequest {
+	uint64 id = 1;
+}
+
+message QueryGetTxHistoryResponse {
+	TxHistory TxHistory = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllTxHistoryRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllTxHistoryResponse {
+	repeated TxHistory TxHistory = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetDepositEarnedRequest {
+	uint64 id = 1;
+}
+
+message QueryGetDepositEarnedResponse {
+	DepositEarned DepositEarned = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllDepositEarnedRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllDepositEarnedResponse {
+	repeated DepositEarned DepositEarned = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetBorrowAccuredRequest {
+	uint64 id = 1;
+}
+
+message QueryGetBorrowAccuredResponse {
+	BorrowAccured BorrowAccured = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllBorrowAccuredRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllBorrowAccuredResponse {
+	repeated BorrowAccured BorrowAccured = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetDepositRequest {
+	uint64 id = 1;
+}
+
+message QueryGetDepositResponse {
+	Deposit Deposit = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllDepositRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllDepositResponse {
+	repeated Deposit Deposit = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetBorrowRequest {
+	uint64 id = 1;
+}
+
+message QueryGetBorrowResponse {
+	Borrow Borrow = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllBorrowRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllBorrowResponse {
+	repeated Borrow Borrow = 1 [(gogoproto.nullable) = false];
 	cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 

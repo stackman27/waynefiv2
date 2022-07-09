@@ -31,6 +31,51 @@ func TestGenesisState_Validate(t *testing.T) {
 					},
 				},
 				LoanCount: 2,
+				TxHistoryList: []types.TxHistory{
+					{
+						Id: 0,
+					},
+					{
+						Id: 1,
+					},
+				},
+				TxHistoryCount: 2,
+				DepositEarnedList: []types.DepositEarned{
+					{
+						Id: 0,
+					},
+					{
+						Id: 1,
+					},
+				},
+				DepositEarnedCount: 2,
+				BorrowAccuredList: []types.BorrowAccured{
+					{
+						Id: 0,
+					},
+					{
+						Id: 1,
+					},
+				},
+				BorrowAccuredCount: 2,
+				DepositList: []types.Deposit{
+					{
+						Id: 0,
+					},
+					{
+						Id: 1,
+					},
+				},
+				DepositCount: 2,
+				BorrowList: []types.Borrow{
+					{
+						Id: 0,
+					},
+					{
+						Id: 1,
+					},
+				},
+				BorrowCount: 2,
 				// this line is used by starport scaffolding # types/genesis/validField
 			},
 			valid: true,
@@ -58,6 +103,136 @@ func TestGenesisState_Validate(t *testing.T) {
 					},
 				},
 				LoanCount: 0,
+			},
+			valid: false,
+		},
+		{
+			desc: "duplicated txHistory",
+			genState: &types.GenesisState{
+				TxHistoryList: []types.TxHistory{
+					{
+						Id: 0,
+					},
+					{
+						Id: 0,
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "invalid txHistory count",
+			genState: &types.GenesisState{
+				TxHistoryList: []types.TxHistory{
+					{
+						Id: 1,
+					},
+				},
+				TxHistoryCount: 0,
+			},
+			valid: false,
+		},
+		{
+			desc: "duplicated depositEarned",
+			genState: &types.GenesisState{
+				DepositEarnedList: []types.DepositEarned{
+					{
+						Id: 0,
+					},
+					{
+						Id: 0,
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "invalid depositEarned count",
+			genState: &types.GenesisState{
+				DepositEarnedList: []types.DepositEarned{
+					{
+						Id: 1,
+					},
+				},
+				DepositEarnedCount: 0,
+			},
+			valid: false,
+		},
+		{
+			desc: "duplicated borrowAccured",
+			genState: &types.GenesisState{
+				BorrowAccuredList: []types.BorrowAccured{
+					{
+						Id: 0,
+					},
+					{
+						Id: 0,
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "invalid borrowAccured count",
+			genState: &types.GenesisState{
+				BorrowAccuredList: []types.BorrowAccured{
+					{
+						Id: 1,
+					},
+				},
+				BorrowAccuredCount: 0,
+			},
+			valid: false,
+		},
+		{
+			desc: "duplicated deposit",
+			genState: &types.GenesisState{
+				DepositList: []types.Deposit{
+					{
+						Id: 0,
+					},
+					{
+						Id: 0,
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "invalid deposit count",
+			genState: &types.GenesisState{
+				DepositList: []types.Deposit{
+					{
+						Id: 1,
+					},
+				},
+				DepositCount: 0,
+			},
+			valid: false,
+		},
+		{
+			desc: "duplicated borrow",
+			genState: &types.GenesisState{
+				BorrowList: []types.Borrow{
+					{
+						Id: 0,
+					},
+					{
+						Id: 0,
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "invalid borrow count",
+			genState: &types.GenesisState{
+				BorrowList: []types.Borrow{
+					{
+						Id: 1,
+					},
+				},
+				BorrowCount: 0,
 			},
 			valid: false,
 		},

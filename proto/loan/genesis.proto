@@ -4,6 +4,11 @@ package loan.loan;
 import "gogoproto/gogo.proto";
 import "loan/params.proto";
 import "loan/loan.proto";
+import "loan/tx_history.proto";
+import "loan/deposit_earned.proto";
+import "loan/borrow_accured.proto";
+import "loan/deposit.proto";
+import "loan/borrow.proto";
 // this line is used by starport scaffolding # genesis/proto/import
 
 option go_package = "loan/x/loan/types";
@@ -13,5 +18,15 @@ message GenesisState {
   Params params = 1 [(gogoproto.nullable) = false];
   repeated Loan loanList = 2 [(gogoproto.nullable) = false];
   uint64 loanCount = 3;
+  repeated TxHistory txHistoryList = 4 [(gogoproto.nullable) = false];
+  uint64 txHistoryCount = 5;
+  repeated DepositEarned depositEarnedList = 6 [(gogoproto.nullable) = false];
+  uint64 depositEarnedCount = 7;
+  repeated BorrowAccured borrowAccuredList = 8 [(gogoproto.nullable) = false];
+  uint64 borrowAccuredCount = 9;
+  repeated Deposit depositList = 10 [(gogoproto.nullable) = false];
+  uint64 depositCount = 11;
+  repeated Borrow borrowList = 12 [(gogoproto.nullable) = false];
+  uint64 borrowCount = 13;
   // this line is used by starport scaffolding # genesis/proto/state
 }

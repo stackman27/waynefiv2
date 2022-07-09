@@ -32,6 +32,66 @@ func NewHandler(k keeper.Keeper) sdk.Handler {
 		case *types.MsgCancelLoan:
 			res, err := msgServer.CancelLoan(sdk.WrapSDKContext(ctx), msg)
 			return sdk.WrapServiceResult(ctx, res, err)
+		case *types.MsgCreateTxHistory:
+			res, err := msgServer.CreateTxHistory(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
+
+		case *types.MsgUpdateTxHistory:
+			res, err := msgServer.UpdateTxHistory(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
+
+		case *types.MsgDeleteTxHistory:
+			res, err := msgServer.DeleteTxHistory(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
+
+		case *types.MsgCreateDepositEarned:
+			res, err := msgServer.CreateDepositEarned(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
+
+		case *types.MsgUpdateDepositEarned:
+			res, err := msgServer.UpdateDepositEarned(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
+
+		case *types.MsgDeleteDepositEarned:
+			res, err := msgServer.DeleteDepositEarned(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
+
+		case *types.MsgCreateBorrowAccured:
+			res, err := msgServer.CreateBorrowAccured(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
+
+		case *types.MsgUpdateBorrowAccured:
+			res, err := msgServer.UpdateBorrowAccured(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
+
+		case *types.MsgDeleteBorrowAccured:
+			res, err := msgServer.DeleteBorrowAccured(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
+
+		case *types.MsgCreateDeposit:
+			res, err := msgServer.CreateDeposit(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
+
+		case *types.MsgUpdateDeposit:
+			res, err := msgServer.UpdateDeposit(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
+
+		case *types.MsgDeleteDeposit:
+			res, err := msgServer.DeleteDeposit(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
+
+		case *types.MsgCreateBorrow:
+			res, err := msgServer.CreateBorrow(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
+
+		case *types.MsgUpdateBorrow:
+			res, err := msgServer.UpdateBorrow(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
+
+		case *types.MsgDeleteBorrow:
+			res, err := msgServer.DeleteBorrow(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
+
 			// this line is used by starport scaffolding # 1
 		default:
 			errMsg := fmt.Sprintf("unrecognized %s message type: %T", types.ModuleName, msg)
