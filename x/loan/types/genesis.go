@@ -18,6 +18,7 @@ func DefaultGenesis() *GenesisState {
 		BorrowList:        []Borrow{},
 		AprList:           []Apr{},
 		UserList:          []User{},
+		PoolList:          []Pool{},
 		// this line is used by starport scaffolding # genesis/types/default
 		Params: DefaultParams(),
 	}
@@ -121,6 +122,18 @@ func (gs GenesisState) Validate() error {
 			return fmt.Errorf("user id should be lower or equal than the last id")
 		}
 		userIdMap[elem.Id] = true
+	}
+	// Check for duplicated ID in pool
+	poolIdMap := make(map[uint64]bool)
+	poolCount := gs.GetPoolCount()
+	for _, elem := range gs.PoolList {
+		if _, ok := poolIdMap[elem.Id]; ok {
+			return fmt.Errorf("duplicated id for pool")
+		}
+		if elem.Id >= poolCount {
+			return fmt.Errorf("pool id should be lower or equal than the last id")
+		}
+		poolIdMap[elem.Id] = true
 	}
 	// this line is used by starport scaffolding # genesis/types/validate
 

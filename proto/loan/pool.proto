@@ -3,6 +3,7 @@ package loan.loan;
 
 option go_package = "loan/x/loan/types";
 
+import "gogoproto/gogo.proto";
 import "loan/user.proto";
 import "loan/apr.proto";
 
@@ -17,3 +18,4 @@ message Pool {
   repeated User users = 9;
   repeated Apr aprs = 10;
 }
+

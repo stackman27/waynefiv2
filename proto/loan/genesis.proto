@@ -11,6 +11,7 @@ import "loan/deposit.proto";
 import "loan/borrow.proto";
 import "loan/apr.proto";
 import "loan/user.proto";
+import "loan/pool.proto";
 // this line is used by starport scaffolding # genesis/proto/import
 
 option go_package = "loan/x/loan/types";
@@ -34,5 +35,7 @@ message GenesisState {
   uint64 aprCount = 15;
   repeated User userList = 16 [(gogoproto.nullable) = false];
   uint64 userCount = 17;
+  repeated Pool poolList = 18 [(gogoproto.nullable) = false];
+  uint64 poolCount = 19;
   // this line is used by starport scaffolding # genesis/proto/state
 }

@@ -60,3 +60,8 @@ const (
 	UserKey      = "User-value-"
 	UserCountKey = "User-count-"
 )
+
+const (
+	PoolKey      = "Pool-value-"
+	PoolCountKey = "Pool-count-"
+)

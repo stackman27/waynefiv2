@@ -65,6 +65,13 @@ func InitGenesis(ctx sdk.Context, k keeper.Keeper, genState types.GenesisState) 
 
 	// Set user count
 	k.SetUserCount(ctx, genState.UserCount)
+	// Set all the pool
+	for _, elem := range genState.PoolList {
+		k.SetPool(ctx, elem)
+	}
+
+	// Set pool count
+	k.SetPoolCount(ctx, genState.PoolCount)
 	// this line is used by starport scaffolding # genesis/module/init
 	k.SetParams(ctx, genState.Params)
 }
@@ -90,6 +97,8 @@ func ExportGenesis(ctx sdk.Context, k keeper.Keeper) *types.GenesisState {
 	genesis.AprCount = k.GetAprCount(ctx)
 	genesis.UserList = k.GetAllUser(ctx)
 	genesis.UserCount = k.GetUserCount(ctx)
+	genesis.PoolList = k.GetAllPool(ctx)
+	genesis.PoolCount = k.GetPoolCount(ctx)
 	// this line is used by starport scaffolding # genesis/module/export
 
 	return genesis
