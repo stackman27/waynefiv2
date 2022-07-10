@@ -1,0 +1,19 @@
+syntax = "proto3";
+package loan.loan;
+
+option go_package = "loan/x/loan/types";
+
+import "loan/user.proto";
+import "loan/apr.proto";
+
+message Pool {
+  string creator = 1;
+  uint64 id = 2;
+  string asset = 3; 
+  string denom = 4; 
+  int32 collatoralFactor = 5; 
+  int32 depositBalance = 6;
+  int32 borrowBalance = 7;
+  repeated User users = 9;
+  repeated Apr aprs = 10;
+}

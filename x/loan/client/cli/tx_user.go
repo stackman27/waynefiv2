@@ -15,7 +15,7 @@ func CmdCreateUser() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "create-user",
 		Short: "Create a new user",
-		Args:  cobra.ExactArgs(2),
+		Args:  cobra.ExactArgs(0),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
 			initialAtomDeposit := types.Deposit{Asset: "ATOM", Denom: "uatom"}
 			initialCroDeposit := types.Deposit{Asset: "CRO", Denom: "ucro"}

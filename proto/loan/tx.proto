@@ -40,6 +40,8 @@ rpc CreateApr(MsgCreateApr) returns (MsgCreateAprResponse);
 rpc CreateUser(MsgCreateUser) returns (MsgCreateUserResponse);
   rpc UpdateUser(MsgUpdateUser) returns (MsgUpdateUserResponse);
   rpc DeleteUser(MsgDeleteUser) returns (MsgDeleteUserResponse);
+  
+  rpc CreatePool(MsgCreatePool) returns (MsgCreatePoolResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -301,5 +303,20 @@ message MsgDeleteUser {
 }
 
 message MsgDeleteUserResponse {}
+message MsgCreatePool {
+  string creator = 1;
+  uint64 id = 2;
+  string asset = 3; 
+  string denom = 4; 
+  int32 collatoralFactor = 5; 
+  int32 depositBalance = 6;
+  int32 borrowBalance = 7;
+  repeated User users = 9;
+  repeated Apr aprs = 10;
+}
+
+message MsgCreatePoolResponse {
+  uint64 id = 1;
+}
 
 // this line is used by starport scaffolding # proto/tx/message

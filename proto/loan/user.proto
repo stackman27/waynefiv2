@@ -3,7 +3,6 @@ package loan.loan;
 
 option go_package = "loan/x/loan/types";
 
-import "gogoproto/gogo.proto";
 import "loan/deposit.proto";
 import "loan/borrow.proto";
 import "loan/deposit_earned.proto";
